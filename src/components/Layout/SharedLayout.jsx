@@ -10,7 +10,7 @@ export const SharedLayout = () => {
                 <Nav>
                     <StyledNavLink to="/">Home</StyledNavLink>
                     <StyledNavLink to="contacts">Contacts</StyledNavLink>
-                    <StyledNavLink to="register">SignUp</StyledNavLink>
+                    <StyledNavLink to="register">Sign up</StyledNavLink>
                     <StyledNavLink to="login">Login</StyledNavLink>
                 </Nav>
             </Header>
