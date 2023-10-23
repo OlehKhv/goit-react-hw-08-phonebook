@@ -6,16 +6,14 @@ import {
 } from 'components/Form/Form.styled';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { signUp } from 'redux/auth/thunks';
+import { logIn } from 'redux/auth/thunks';
 
 const INITIAL_STATE = {
-    name: '',
     email: '',
     password: '',
 };
 
-const RegisterForm = () => {
-    const [name, setName] = useState(INITIAL_STATE.name);
+export const LoginForm = () => {
     const [email, setEmail] = useState(INITIAL_STATE.email);
     const [password, setPassword] = useState(INITIAL_STATE.password);
 
@@ -23,10 +21,6 @@ const RegisterForm = () => {
 
     const handleInput = ({ target: { name, value } }) => {
         switch (name) {
-            case 'name':
-                setName(value);
-                break;
-
             case 'email':
                 setEmail(value);
                 break;
@@ -41,31 +35,18 @@ const RegisterForm = () => {
     const handleSignup = e => {
         e.preventDefault();
 
-        dispatch(signUp({ name, email, password }));
+        dispatch(logIn({ email, password }));
 
         resetForm();
     };
 
     const resetForm = () => {
-        setName(INITIAL_STATE.name);
         setEmail(INITIAL_STATE.email);
         setPassword(INITIAL_STATE.password);
     };
 
     return (
         <PhonebookForm onSubmit={handleSignup}>
-            <LabelInput htmlFor="name">Name</LabelInput>
-            <InputForm
-                type="text"
-                name="name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                required
-                value={name}
-                onChange={handleInput}
-                id="name"
-                placeholder="🙍‍♂️   Alex Smith"
-            />
             <LabelInput htmlFor="email">Email</LabelInput>
             <InputForm
                 type="email"
@@ -90,5 +71,3 @@ const RegisterForm = () => {
         </PhonebookForm>
     );
 };
-
-export default RegisterForm;

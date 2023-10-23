@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchAllContacts } from 'redux/contacts/thunks';
+// import { useDispatch } from 'react-redux';
+// import { useEffect } from 'react';
+// import { fetchAllContacts } from 'redux/contacts/thunks';
 import { Route, Routes } from 'react-router-dom';
 import { SharedLayout } from './Layout/SharedLayout';
 
