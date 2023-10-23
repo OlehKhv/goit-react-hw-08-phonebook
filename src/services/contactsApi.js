@@ -1,6 +1,38 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://652a6a3a4791d884f1fce5f4.mockapi.io/api/v1';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+
+const token = {
+    setToken(token) {
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    },
+    unset() {
+        axios.defaults.headers.common.Authorization = '';
+    },
+};
+
+export const signupUser = async user => {
+    const { data } = await axios.post('/users/signup', user);
+    token.setToken(data.token);
+    return data;
+};
+
+export const loginUser = async user => {
+    const { data } = await axios.post('/users/login', user);
+    token.setToken(data.token);
+    return data;
+};
+
+export const logoutUser = async () => {
+    const { data } = await axios.post('/users/logout');
+    token.unset();
+    return data;
+};
+
+export const currentUser = async () => {
+    const { data } = await axios('/users/current');
+    return data;
+};
 
 export const getAllContacts = async () => {
     const { data } = await axios('/contacts');
