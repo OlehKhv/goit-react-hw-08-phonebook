@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { selectLoggedIn } from 'redux/auth/selectors';
 
 export const AuthNav = () => {
-    const isLoggenIn = useSelector(selectLoggedIn);
+    const isLoggedIn = useSelector(selectLoggedIn);
 
-    return isLoggenIn ? (
+    return isLoggedIn ? (
         <UserMenu />
     ) : (
         <ul>

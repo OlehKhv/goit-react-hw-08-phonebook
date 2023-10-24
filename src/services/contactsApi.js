@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
-const token = {
+export const token = {
     setToken(token) {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     },
@@ -45,5 +45,6 @@ export const removeContact = async id => {
 
 export const newContact = async contact => {
     const { data } = await axios.post('/contacts', contact);
+    console.log(data);
     return data;
 };

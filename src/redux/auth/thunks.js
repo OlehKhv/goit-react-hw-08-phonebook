@@ -4,6 +4,7 @@ import {
     loginUser,
     logoutUser,
     signupUser,
+    token,
 } from 'services/contactsApi';
 
 export const signUp = createAsyncThunk(
@@ -41,8 +42,14 @@ export const logOut = createAsyncThunk(
 
 export const refresh = createAsyncThunk(
     'auth/refresh',
-    async (_, { rejectWithValue }) => {
+    async (_, { getState, rejectWithValue }) => {
         try {
+            const persistedToken = getState().auth.token;
+
+            if (!persistedToken) return rejectWithValue('Not valid token');
+
+            token.setToken(persistedToken);
+
             return await currentUser();
         } catch (e) {
             return rejectWithValue(e.message);
