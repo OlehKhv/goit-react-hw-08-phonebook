@@ -18,7 +18,7 @@ import { ErrorNotification } from 'components/Notification/ErrorNotification';
 import { selectFilter } from 'redux/filter/selectors';
 import { NotFoundNotification } from 'components/Notification/NotFoundNotification';
 
-export const Contacts = () => {
+export const ContactsList = () => {
     const dispatch = useDispatch();
 
     const contacts = useSelector(selectContacts);
@@ -35,11 +35,11 @@ export const Contacts = () => {
 
             {!error && !isLoading && visibleContacts.length > 0 && (
                 <ul>
-                    {visibleContacts.map(({ id, name, phone }) => {
+                    {visibleContacts.map(({ id, name, number }) => {
                         return (
                             <ContactItem key={id}>
                                 <ContactText>
-                                    🧑 {name}: {phone}
+                                    🧑 {name}: {number}
                                 </ContactText>
                                 <DeleteButton
                                     onClick={() => {
@@ -74,5 +74,3 @@ export const Contacts = () => {
         </div>
     );
 };
-
-export default Contacts;

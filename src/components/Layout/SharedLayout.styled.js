@@ -6,6 +6,8 @@ export const Container = styled('div')`
 `;
 
 export const Header = styled('header')`
+    display: flex;
+    justify-content: space-between;
     padding-bottom: 40px;
     margin-bottom: 40px;
     border-bottom: 2px solid grey;

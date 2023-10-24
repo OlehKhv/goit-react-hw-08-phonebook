@@ -6,12 +6,12 @@ import { addContact } from 'redux/contacts/thunks';
 
 const INITIAL_STATE = {
     name: '',
-    phone: '',
+    number: '',
 };
 
 export const Form = () => {
     const [name, setName] = useState(INITIAL_STATE.name);
-    const [phone, setPhone] = useState(INITIAL_STATE.phone);
+    const [number, setNumber] = useState(INITIAL_STATE.number);
 
     const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ export const Form = () => {
                 break;
 
             case 'phone':
-                setPhone(value);
+                setNumber(value);
                 break;
             // no default
         }
@@ -39,14 +39,14 @@ export const Form = () => {
             return;
         }
 
-        dispatch(addContact({ name, phone }));
+        dispatch(addContact({ name, number }));
 
         resetForm();
     };
 
     const resetForm = () => {
         setName(INITIAL_STATE.name);
-        setPhone(INITIAL_STATE.phone);
+        setNumber(INITIAL_STATE.number);
     };
 
     return (
@@ -71,7 +71,7 @@ export const Form = () => {
                 pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                 title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                 required
-                value={phone}
+                value={number}
                 onChange={handleInput}
                 id="phone"
                 placeholder="📞   222-22-22"

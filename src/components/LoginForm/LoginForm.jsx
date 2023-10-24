@@ -67,7 +67,7 @@ export const LoginForm = () => {
                 id="password"
                 placeholder="password"
             />
-            <ButtonAdd type="submit">Sing in</ButtonAdd>
+            <ButtonAdd type="submit">Login</ButtonAdd>
         </PhonebookForm>
     );
 };

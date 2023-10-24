@@ -44,8 +44,7 @@ const authSlice = createSlice({
         [logOut.pending](state) {
             state.isLoading = true;
         },
-        [logOut.fulfilled](state, { payload }) {
-            console.log('payload :>> ', payload);
+        [logOut.fulfilled](state) {
             state.isLoading = false;
             state.user = { name: null, email: null };
             state.token = null;
