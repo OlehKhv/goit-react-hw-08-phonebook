@@ -3,8 +3,8 @@ import {
     currentUser,
     loginUser,
     logoutUser,
+    setToken,
     signupUser,
-    token,
 } from 'services/contactsApi';
 
 export const signUp = createAsyncThunk(
@@ -48,7 +48,7 @@ export const refresh = createAsyncThunk(
 
             if (!persistedToken) return rejectWithValue('Not valid token');
 
-            token.setToken(persistedToken);
+            setToken(persistedToken);
 
             return await currentUser();
         } catch (e) {

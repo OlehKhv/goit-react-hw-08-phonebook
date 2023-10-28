@@ -29,15 +29,27 @@ export const App = () => {
                     <Route index element={<Home />} />
                     <Route
                         path="register"
-                        element={<RestrictedRoute component={Register} />}
+                        element={
+                            <RestrictedRoute>
+                                <Register />
+                            </RestrictedRoute>
+                        }
                     />
                     <Route
                         path="login"
-                        element={<RestrictedRoute component={Login} />}
+                        element={
+                            <RestrictedRoute>
+                                <Login />
+                            </RestrictedRoute>
+                        }
                     />
                     <Route
                         path="contacts"
-                        element={<PrivateRoute component={Contacts} />}
+                        element={
+                            <PrivateRoute>
+                                <Contacts />
+                            </PrivateRoute>
+                        }
                     />
                     <Route path="*" element={<NotFound />} />
                 </Route>

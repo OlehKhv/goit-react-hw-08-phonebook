@@ -4,7 +4,10 @@
     "private": true,
     "homepage": "https://OlehKhv.github.io/goit-react-hw-08-phonebook/",
     "dependencies": {
-        "@mui/material": "^5.14.14",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.14.15",
+        "@mui/material": "^5.14.15",
         "@mui/styled-engine-sc": "^6.0.0-alpha.2",
         "@reduxjs/toolkit": "^1.9.7",
         "@testing-library/jest-dom": "^5.16.3",
