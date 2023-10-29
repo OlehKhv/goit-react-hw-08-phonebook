@@ -7,8 +7,8 @@ import {
     selectLoading,
 } from 'redux/contacts/selectors';
 import { deleteContact } from 'redux/contacts/thunks';
-import Loader from 'components/Loader/Loader';
-import Notification from 'components/Notification/Notification';
+import { Loader } from 'components/Loader/Loader';
+import { Notification } from 'components/Notification/Notification';
 // import { ErrorNotification } from 'components/Notification/ErrorNotification';
 import { selectFilter } from 'redux/filter/selectors';
 import { NotFoundNotification } from 'components/Notification/NotFoundNotification';
