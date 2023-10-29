@@ -9,7 +9,7 @@ import {
 import { deleteContact } from 'redux/contacts/thunks';
 import Loader from 'components/Loader/Loader';
 import Notification from 'components/Notification/Notification';
-import { ErrorNotification } from 'components/Notification/ErrorNotification';
+// import { ErrorNotification } from 'components/Notification/ErrorNotification';
 import { selectFilter } from 'redux/filter/selectors';
 import { NotFoundNotification } from 'components/Notification/NotFoundNotification';
 import {
@@ -21,6 +21,7 @@ import {
     Typography,
 } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
+import toast from 'react-hot-toast';
 
 export const ContactsList = () => {
     const dispatch = useDispatch();
@@ -30,6 +31,15 @@ export const ContactsList = () => {
     const error = useSelector(selectError);
     const isLoading = useSelector(selectLoading);
     const filter = useSelector(selectFilter);
+
+    const handleDeleteContact = async (id, name) => {
+        try {
+            await dispatch(deleteContact(id)).unwrap();
+            toast.success(`${name} deleted!`);
+        } catch (error) {
+            toast.error(`Something went wrong. Error: ${error}.`);
+        }
+    };
 
     return (
         <Box
@@ -49,7 +59,7 @@ export const ContactsList = () => {
 
             {isLoading && <Loader />}
 
-            {!error && !isLoading && visibleContacts.length > 0 && (
+            {!isLoading && visibleContacts.length > 0 && (
                 <Stack spacing={2}>
                     {visibleContacts.map(({ id, name, number }) => {
                         return (
@@ -76,7 +86,7 @@ export const ContactsList = () => {
                                     size="large"
                                     color="error"
                                     onClick={() => {
-                                        dispatch(deleteContact(id));
+                                        handleDeleteContact(id, name);
                                     }}
                                 >
                                     <PersonRemoveIcon fontSize="inherit" />
@@ -91,12 +101,12 @@ export const ContactsList = () => {
                 <Notification>Your phone book is empty!</Notification>
             )}
 
-            {error && !isLoading && (
+            {/* {error && !isLoading && (
                 <ErrorNotification>
                     Oops... Something went wrong. Error: {error}. Please, try
                     again.
                 </ErrorNotification>
-            )}
+            )} */}
 
             {filter && !isLoading && visibleContacts.length === 0 && (
                 <NotFoundNotification>

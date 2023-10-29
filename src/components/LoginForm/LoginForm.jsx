@@ -1,5 +1,6 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logIn } from 'redux/auth/thunks';
@@ -15,10 +16,15 @@ export const LoginForm = () => {
 
     const dispatch = useDispatch();
 
-    const handleLogin = e => {
+    const handleLogin = async e => {
         e.preventDefault();
 
-        dispatch(logIn({ email, password }));
+        try {
+            await dispatch(logIn({ email, password })).unwrap();
+            toast.success('Welcome');
+        } catch (error) {
+            toast.error('Invalid Email or Password ');
+        }
 
         resetForm();
     };

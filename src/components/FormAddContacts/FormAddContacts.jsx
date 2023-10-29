@@ -4,6 +4,7 @@ import { selectContacts } from 'redux/contacts/selectors';
 import { addContact } from 'redux/contacts/thunks';
 import { Box, Button, TextField } from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import toast from 'react-hot-toast';
 
 const INITIAL_STATE = {
     name: '',
@@ -18,7 +19,7 @@ export const FormAddContacts = () => {
 
     const contacts = useSelector(selectContacts);
 
-    const handleAddContact = e => {
+    const handleAddContact = async e => {
         e.preventDefault();
 
         if (contacts.some(contact => contact.name === name)) {
@@ -27,7 +28,12 @@ export const FormAddContacts = () => {
             return;
         }
 
-        dispatch(addContact({ name, number }));
+        try {
+            await dispatch(addContact({ name, number })).unwrap();
+            toast.success(`${name} added!`);
+        } catch (error) {
+            toast.error(`Something went wrong. Error: ${error}.`);
+        }
 
         resetForm();
     };

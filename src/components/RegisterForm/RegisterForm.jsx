@@ -1,5 +1,6 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signUp } from 'redux/auth/thunks';
@@ -17,10 +18,15 @@ export const RegisterForm = () => {
 
     const dispatch = useDispatch();
 
-    const handleSignUp = e => {
+    const handleSignUp = async e => {
         e.preventDefault();
 
-        dispatch(signUp({ name, email, password }));
+        try {
+            await dispatch(signUp({ name, email, password })).unwrap();
+            toast.success(`Welcome ${name}`);
+        } catch (error) {
+            toast.error('Invalid Email or Password ');
+        }
 
         resetForm();
     };
