@@ -1,11 +1,7 @@
-import {
-    ButtonAdd,
-    InputForm,
-    LabelInput,
-    PhonebookForm,
-} from 'components/Form/Form.styled';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { signUp } from 'redux/auth/thunks';
 
 const INITIAL_STATE = {
@@ -14,31 +10,14 @@ const INITIAL_STATE = {
     password: '',
 };
 
-const RegisterForm = () => {
+export const RegisterForm = () => {
     const [name, setName] = useState(INITIAL_STATE.name);
     const [email, setEmail] = useState(INITIAL_STATE.email);
     const [password, setPassword] = useState(INITIAL_STATE.password);
 
     const dispatch = useDispatch();
 
-    const handleInput = ({ target: { name, value } }) => {
-        switch (name) {
-            case 'name':
-                setName(value);
-                break;
-
-            case 'email':
-                setEmail(value);
-                break;
-
-            case 'password':
-                setPassword(value);
-                break;
-            // no default
-        }
-    };
-
-    const handleSignup = e => {
+    const handleSignUp = e => {
         e.preventDefault();
 
         dispatch(signUp({ name, email, password }));
@@ -53,42 +32,58 @@ const RegisterForm = () => {
     };
 
     return (
-        <PhonebookForm onSubmit={handleSignup}>
-            <LabelInput htmlFor="name">Name</LabelInput>
-            <InputForm
-                type="text"
-                name="name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        <Box
+            component="form"
+            sx={{
+                '& > :not(style)': {
+                    m: 1,
+                    width: '500px',
+                    maxWidth: '100%',
+                },
+            }}
+            noValidate
+            onSubmit={handleSignUp}
+        >
+            <TextField
                 required
+                label="Full name"
+                placeholder="Alex Alex"
                 value={name}
-                onChange={handleInput}
-                id="name"
-                placeholder="🙍‍♂️   Alex Smith"
+                onChange={({ target }) => {
+                    setName(target.value);
+                }}
             />
-            <LabelInput htmlFor="email">Email</LabelInput>
-            <InputForm
-                type="email"
-                name="email"
+            <TextField
                 required
-                value={email}
-                onChange={handleInput}
-                id="email"
+                label="Email address"
+                helperText="We'll never share your email."
                 placeholder="mail@mail.com"
+                type="email"
+                value={email}
+                onChange={({ target }) => {
+                    setEmail(target.value);
+                }}
             />
-            <LabelInput htmlFor="password">Password</LabelInput>
-            <InputForm
-                type="password"
-                name="password"
-                required
-                value={password}
-                onChange={handleInput}
-                id="password"
+            <TextField
+                label="Password"
+                helperText="You should not share the password with anyone!"
                 placeholder="password"
+                type="password"
+                value={password}
+                onChange={({ target }) => {
+                    setPassword(target.value);
+                }}
             />
-            <ButtonAdd type="submit">Sing in</ButtonAdd>
-        </PhonebookForm>
+            <Button variant="outlined" type="submit" size="large">
+                Sign up
+            </Button>
+            <Typography>
+                Already have an account? Please{' '}
+                <Link to="/login" underline="hover">
+                    login
+                </Link>
+                .
+            </Typography>
+        </Box>
     );
 };
-
-export default RegisterForm;

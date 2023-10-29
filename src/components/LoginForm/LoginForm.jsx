@@ -1,11 +1,7 @@
-import {
-    ButtonAdd,
-    InputForm,
-    LabelInput,
-    PhonebookForm,
-} from 'components/Form/Form.styled';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { logIn } from 'redux/auth/thunks';
 
 const INITIAL_STATE = {
@@ -19,20 +15,7 @@ export const LoginForm = () => {
 
     const dispatch = useDispatch();
 
-    const handleInput = ({ target: { name, value } }) => {
-        switch (name) {
-            case 'email':
-                setEmail(value);
-                break;
-
-            case 'password':
-                setPassword(value);
-                break;
-            // no default
-        }
-    };
-
-    const handleSignup = e => {
+    const handleLogin = e => {
         e.preventDefault();
 
         dispatch(logIn({ email, password }));
@@ -46,28 +29,48 @@ export const LoginForm = () => {
     };
 
     return (
-        <PhonebookForm onSubmit={handleSignup}>
-            <LabelInput htmlFor="email">Email</LabelInput>
-            <InputForm
-                type="email"
-                name="email"
+        <Box
+            component="form"
+            sx={{
+                '& > :not(style)': {
+                    m: 1,
+                    width: '500px',
+                    maxWidth: '100%',
+                },
+            }}
+            noValidate
+            onSubmit={handleLogin}
+        >
+            <TextField
                 required
-                value={email}
-                onChange={handleInput}
-                id="email"
+                label="Email address"
                 placeholder="mail@mail.com"
+                type="email"
+                value={email}
+                onChange={({ target }) => {
+                    setEmail(target.value);
+                }}
             />
-            <LabelInput htmlFor="password">Password</LabelInput>
-            <InputForm
-                type="password"
-                name="password"
+            <TextField
                 required
-                value={password}
-                onChange={handleInput}
-                id="password"
+                label="Password"
                 placeholder="password"
+                type="password"
+                value={password}
+                onChange={({ target }) => {
+                    setPassword(target.value);
+                }}
             />
-            <ButtonAdd type="submit">Login</ButtonAdd>
-        </PhonebookForm>
+            <Button variant="outlined" type="submit" size="large">
+                Login
+            </Button>
+            <Typography>
+                Don't have an account yet? Please{' '}
+                <Link to="/register" underline="hover">
+                    register
+                </Link>
+                .
+            </Typography>
+        </Box>
     );
 };

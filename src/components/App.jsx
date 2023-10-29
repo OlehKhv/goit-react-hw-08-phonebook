@@ -7,6 +7,7 @@ import { refresh } from 'redux/auth/thunks';
 import { RestrictedRoute } from './RestrictedRoute/RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
 import { selectRefreshing } from 'redux/auth/selectors';
+import Profile from 'pages/Profile';
 
 const Home = lazy(() => import('pages/Home'));
 const Contacts = lazy(() => import('pages/Contacts'));
@@ -48,6 +49,14 @@ export const App = () => {
                         element={
                             <PrivateRoute>
                                 <Contacts />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="profile"
+                        element={
+                            <PrivateRoute>
+                                <Profile />
                             </PrivateRoute>
                         }
                     />

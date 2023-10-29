@@ -1,6 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { signUp, logIn, logOut } from './thunks';
-import { refresh } from 'redux/auth/thunks';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { signUp, logIn, logOut, refresh } from './thunks';
+import {
+    handleFulfilled,
+    handleLoginFulfilled,
+    handleLogoutFulfilled,
+    handlePending,
+    handlePendingRefresh,
+    handleRefreshFulfilled,
+    handleRejected,
+    handleRejectedRefresh,
+    handleSignUpFulfilled,
+} from './helpers';
 
 const initialState = {
     user: { name: null, email: null },
@@ -16,58 +26,26 @@ const authSlice = createSlice({
 
     initialState,
 
-    extraReducers: {
-        [signUp.pending](state) {
-            state.isLoading = true;
-        },
-        [signUp.fulfilled](state, { payload }) {
-            state.isLoading = false;
-            state.user = payload.user;
-            state.token = payload.token;
-            state.isLoggedIn = true;
-        },
-        [signUp.rejected](state, { payload }) {
-            state.isLoading = false;
-            state.error = payload;
-        },
-        [logIn.pending](state) {
-            state.isLoading = true;
-        },
-        [logIn.fulfilled](state, { payload }) {
-            state.isLoading = false;
-            state.user = payload.user;
-            state.token = payload.token;
-            state.isLoggedIn = true;
-        },
-        [logIn.rejected](state, { payload }) {
-            state.isLoading = false;
-            state.error = payload;
-        },
-        [logOut.pending](state) {
-            state.isLoading = true;
-        },
-        [logOut.fulfilled](state) {
-            state.isLoading = false;
-            state.user = { name: null, email: null };
-            state.token = null;
-            state.isLoggedIn = false;
-        },
-        [logOut.rejected](state, { payload }) {
-            state.isLoading = false;
-            state.error = payload;
-        },
-        [refresh.pending](state) {
-            state.isRefreshing = true;
-        },
-        [refresh.fulfilled](state, { payload }) {
-            state.isRefreshing = false;
-            state.user = payload;
-            state.isLoggedIn = true;
-        },
-        [refresh.rejected](state, { payload }) {
-            state.isRefreshing = false;
-            state.error = payload;
-        },
+    extraReducers: builder => {
+        builder
+            .addCase(signUp.fulfilled, handleSignUpFulfilled)
+            .addCase(logIn.fulfilled, handleLoginFulfilled)
+            .addCase(logOut.fulfilled, handleLogoutFulfilled)
+            .addCase(refresh.fulfilled, handleRefreshFulfilled)
+            .addCase(refresh.pending, handlePendingRefresh)
+            .addCase(refresh.rejected, handleRejectedRefresh)
+            .addMatcher(
+                isAnyOf(signUp.pending, logIn.pending, logOut.pending),
+                handlePending
+            )
+            .addMatcher(
+                isAnyOf(signUp.rejected, logIn.rejected, logOut.rejected),
+                handleRejected
+            )
+            .addMatcher(
+                isAnyOf(signUp.fulfilled, logIn.fulfilled, logOut.fulfilled),
+                handleFulfilled
+            );
     },
 });
 

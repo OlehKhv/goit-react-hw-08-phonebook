@@ -10,6 +10,7 @@ import {
 import { deepPurple } from '@mui/material/colors';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { selectUserName } from 'redux/auth/selectors';
 import { logOut } from 'redux/auth/thunks';
 
@@ -17,12 +18,18 @@ export const UserMenu = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const name = useSelector(selectUserName);
 
     const handleLogout = () => {
         handleCloseUserMenu();
         dispatch(logOut());
+    };
+
+    const handleNavigateToProfile = () => {
+        handleCloseUserMenu();
+        navigate('profile');
     };
 
     const handleOpenUserMenu = event => {
@@ -56,7 +63,7 @@ export const UserMenu = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={handleNavigateToProfile}>
                     <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>

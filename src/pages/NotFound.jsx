@@ -1,12 +1,11 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NotFound = () => {
     return (
-        <>
+        <section>
             <h2>Not Found</h2>
-            <Link to={'/'}>Back to main</Link>
-        </>
+            <Link to={'/'}>Back to home</Link>
+        </section>
     );
 };
 
